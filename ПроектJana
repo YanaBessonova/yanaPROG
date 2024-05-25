@@ -1,0 +1,234 @@
+#include <stdio.h>
+
+int lr1(void)
+{
+    float V, v1, t, v2;
+    printf("V=");
+    scanf("%f", &V);
+    printf("v1=");
+    scanf("%f", &v1);
+    printf("t=");
+    scanf("%f", &t);
+    v2 = v1 + V / t;
+
+    printf("speed = %f\n", v2);
+    return 0;
+}
+
+int lr2(void)
+{
+    float s; // сумма ряда
+    float a; // очередной элемент ряда
+    float c; // числитель очередного элемента ряда
+    float b; // знаменатель очередного элемента
+    float x; // входной параметр ряда
+    int n; // число элементов ряда
+    int i; // номер очередного элемента ряда
+    int sign; // знак очередного элемента
+
+    // ввод параметров ряда
+    printf("n=");
+    scanf("%d", &n);
+    printf("x=");
+    scanf("%f", &x);
+
+    // начальное присваивание переменных
+    s = 0;
+    sign = 1;
+    i = 0;
+    c = 1;
+    b = x;
+
+    while (i < n)
+    {
+        a = c / b;
+        s = s + a * sign;
+        c = c + 1;
+        b = b * (x * x); // умножаем на x^2
+        i = i + 1;
+        sign = -sign; // меняем знак
+    }
+
+    // вывод результата
+    printf("s = %f\n", s);
+    return 0;
+}
+
+int lr3(void)
+{
+    #define YES 1 //Внутри слова
+    #define NO 0 //Вне слова
+
+    int c; // Количество слов
+    int f; // Колличество букв
+    float a; // Средняя длина
+    int flag; // Признак слова
+
+    c = 0;
+    f = 0;
+    a = 0.0;
+    flag = YES;
+
+    while ((c = getchar()) != EOF)
+    {
+        if (c == ' ' || c == '.' || c == '\n' || c == ',' || c == ';')
+
+        {
+            flag = YES;
+            f = 0;
+        }
+        else if (flag == YES)
+        {
+            flag = NO;
+            c++;
+        }
+        f++;
+    }
+
+    if (c > 0)
+    {
+        a = (float)f / c;
+        printf("Среднее = %.2f\n", a);
+    }
+    else
+    {
+        printf("Нет слов во введенном потоке.\n");
+    }
+
+    return 0;
+}
+int lr4(void)
+
+ {
+    char str[1000];
+    printf("Enter a string: ");
+    fgets(str, sizeof(str), stdin);
+
+    int i = 0;
+    char word[100] = ""; // Буфер для хранения текущего слова
+
+    while (str[i] != '\0') {
+        int j = 0;
+        while (str[i] != ' ' && str[i] != '\0') {
+            word[j] = str[i];
+            j++;
+            i++;
+        }
+        word[j] = '\0'; // Завершаем текущее слово
+
+        if (j % 2 == 0) {
+            printf("%s ", word);
+        }
+
+        if (str[i] != '\0') {
+            i++; // Пропускаем пробел
+        }
+    }
+
+    printf("\n");
+
+    return 0;
+}
+int lr5(void)
+{
+     int arr[10] = {1, -2, 3, -4, 5, -6, 7, -8, 9, -10}; // Примерный массив
+        int sumPositive = 0;
+        int sumNegative = 0;
+
+        for (int i = 0; i < 10; i++) {
+            if (arr[i] >= 0) {
+                sumPositive += arr[i];
+            }
+
+            if (sumNegative < sumPositive && arr[i] < 0) {
+                arr[i] = 0;
+            }
+        }
+
+        printf("Modified array: ");
+        for (int i = 0; i < 10; i++) {
+            printf("%d ", arr[i]);
+        }
+        printf("\n");
+
+        return 0;
+    }
+#include <stdio.h>
+
+// Функция для проверки, является ли объединенный массив геометрической прогрессией
+int isGeometricProgression(int arr[], int n) {
+    if (n < 2) return 1; // Если массив содержит меньше двух элементов, он считается прогрессией
+
+    int ratio = arr[1] / arr[0]; // Начальное значение знаменателя прогрессии
+
+    for (int i = 2; i < n; i++) {
+        if (arr[i] / (double)arr[i - 1] != ratio) {
+            return 0; 
+        }
+    }
+    return 1;
+}
+
+int lr6(void) {
+    int N, K;
+    printf("Enter the number of rows (N): ");
+    scanf("%d", &N);
+    printf("Enter the number of columns (K): ");
+    scanf("%d", &K);
+
+    int arr[100][100];
+    printf("Enter the elements of the array:\n");
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < K; j++) {
+            scanf("%d", &arr[i][j]);
+        }
+    }
+
+    // Объединяем все элементы массива в один массив
+    int totalElements = N * K;
+    int combinedArray[10000]; // Максимальный размер объединенного массива
+    int index = 0;
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < K; j++) {
+            combinedArray[index++] = arr[i][j];
+        }
+    }
+
+    // Проверяем объединенный массив на геометрическую прогрессию
+    if (isGeometricProgression(combinedArray, totalElements)) {
+        printf("The combined array is a geometric progression.\n");
+    } else {
+        printf("The combined array is not a geometric progression.\n");
+    }
+
+    return 0;
+}
+
+#include <stdio.h>
+
+int isSymmetric(long num)//проверка симметричности числа 
+{
+    unsigned long mask = 1UL << ((sizeof(num) * 8) - 1); //Создание маски
+    unsigned long left, right;
+    for (int i = 0; i < (sizeof(num) * 8) / 2; i++)//цикл для проверки симметричности
+    {
+        left = (num >> i) & 1UL; //(num>>i (>> оператор) число num сдвигается влево на i бит ) 1Ul(представляет собой число 1 объявленное как беззнаковая длинная целочисленная)
+        right = (num >> ((sizeof(num) * 8) - 1 - i)) & 1UL; //сдвиг числа вправо с извлечение нужного бита ,умножение на на 8 здесь используется потому что каждый байт содержит 8 битов
+        if (left != right) {
+            return 0; // Несимметрично
+        }
+    }
+    return 1; // Симметрично
+}
+
+int lr7(void) {
+    long num;
+    printf("Введите целое число: ");
+    scanf("%ld", &num);
+    if (isSymmetric(num)) {
+        printf("Двоичное представление симметрично.\n");
+    } else {
+        printf("Двоичное представление несимметрично.\n");
+    }
+    return 0;
+}
